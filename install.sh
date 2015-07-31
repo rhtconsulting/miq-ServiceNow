@@ -5,7 +5,14 @@ DOMAIN=miq-Marketplace
 install_cmd() {
     echo "Importing ${DOMAIN} from ${TOPDIR}/Automate/${DOMAIN}"
     cd /var/www/miq/vmdb
+    echo "Importing Automate"
     bin/rake "rhconsulting:miq_ae_datastore:import[${DOMAIN}, ${TOPDIR}/Automate]"
+
+    echo "Importing Service Dialogs"
+    bin/rake rhconsulting:dialogs:import[${TOPDIR}/ServiceDialogs]
+ 
+    echo "Importing Buttons"
+    bin/rake rhconsulting:buttons:import[${TOPDIR}/Buttons/buttons.yml]
 }
 
 if [ -d ${TOPDIR}/Automate/${DOMAIN} ] ; then
